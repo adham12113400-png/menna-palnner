@@ -1,0 +1,809 @@
+/* ======================================================= */
+/* الإعدادات العامة */
+/* ======================================================= */
+
+:root {
+    --primary-color: #6c5ce7;
+    --accent-color: #fd79a8;
+
+    --bg-gradient:
+        linear-gradient(
+            135deg,
+            #f5f7fa 0%,
+            #e4efe9 100%
+        );
+
+    --card-bg: rgba(255, 255, 255, 0.9);
+
+    --text-dark: #2d3436;
+    --text-muted: #636e72;
+
+    --border-radius-lg: 20px;
+    --border-radius-sm: 12px;
+
+    --shadow:
+        0 10px 30px rgba(0, 0, 0, 0.05);
+
+    --transition:
+        all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+
+/* ======================================================= */
+/* Reset */
+/* ======================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ======================================================= */
+/* Body */
+/* ======================================================= */
+
+body {
+    font-family: 'Cairo', sans-serif;
+
+    background: var(--bg-gradient);
+
+    color: var(--text-dark);
+
+    min-height: 100vh;
+
+    padding: 30px 15px;
+}
+
+
+/* ======================================================= */
+/* Container */
+/* ======================================================= */
+
+.app-container {
+    max-width: 850px;
+
+    margin: 0 auto;
+}
+
+
+/* ======================================================= */
+/* Header */
+/* ======================================================= */
+
+header {
+    text-align: center;
+
+    margin-bottom: 35px;
+}
+
+
+.brand-badge {
+    display: inline-block;
+
+    background: #ffeaa7;
+
+    color: #d63031;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-weight: 900;
+
+    font-size: 12px;
+
+    padding: 6px 16px;
+
+    border-radius: 30px;
+
+    margin-bottom: 15px;
+
+    box-shadow:
+        0 4px 10px rgba(255, 234, 167, 0.4);
+
+    letter-spacing: 0.5px;
+}
+
+
+.logo-area h1 {
+    font-size: 28px;
+
+    font-weight: 900;
+
+    color: var(--text-dark);
+
+    line-height: 1.4;
+}
+
+
+.logo-area h1 span {
+    color: var(--primary-color);
+
+    position: relative;
+
+    font-weight: 900;
+}
+
+
+.logo-area h1 span::after {
+    content: '';
+
+    position: absolute;
+
+    bottom: 2px;
+    left: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background: var(--accent-color);
+
+    opacity: 0.4;
+
+    border-radius: 2px;
+}
+
+
+.subtitle {
+    font-size: 14px;
+
+    color: var(--text-muted);
+
+    margin-top: 10px;
+
+    max-width: 600px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* ======================================================= */
+/* Tabs */
+/* ======================================================= */
+
+.tab-control {
+    display: flex;
+
+    gap: 8px;
+
+    margin-bottom: 15px;
+
+    background: rgba(255, 255, 255, 0.6);
+
+    backdrop-filter: blur(10px);
+
+    padding: 6px;
+
+    border-radius: 50px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.4);
+
+    box-shadow: var(--shadow);
+}
+
+
+.tab-btn {
+    flex: 1;
+
+    padding: 14px 20px;
+
+    border: none;
+
+    background: transparent;
+
+    font-family: 'Cairo', sans-serif;
+
+    font-weight: 700;
+
+    font-size: 15px;
+
+    color: var(--text-muted);
+
+    border-radius: 40px;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+}
+
+
+.tab-btn.active {
+    background: var(--primary-color);
+
+    color: #fff;
+
+    box-shadow:
+        0 8px 20px rgba(108, 92, 231, 0.3);
+}
+
+
+.btn-icon {
+    font-size: 18px;
+}
+
+
+/* ======================================================= */
+/* أزرار Reset */
+/* ======================================================= */
+
+.reset-control {
+    display: flex;
+
+    gap: 10px;
+
+    margin-bottom: 30px;
+}
+
+
+.reset-btn {
+    flex: 1;
+
+    padding: 11px 16px;
+
+    border-radius: 14px;
+
+    font-family: 'Cairo', sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+
+    background: rgba(255, 255, 255, 0.75);
+
+    box-shadow: var(--shadow);
+}
+
+
+.weekly-reset {
+    color: var(--primary-color);
+
+    border:
+        1px solid rgba(108, 92, 231, 0.25);
+}
+
+
+.monthly-reset {
+    color: #e84393;
+
+    border:
+        1px solid rgba(253, 121, 168, 0.25);
+}
+
+
+.reset-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+
+.reset-btn:active {
+    transform: scale(0.98);
+}
+
+
+/* ======================================================= */
+/* Tabs Content */
+/* ======================================================= */
+
+.tab-content {
+    display: none;
+}
+
+
+.tab-content.active-content {
+    display: block;
+
+    animation:
+        slideUp 0.5s ease;
+}
+
+
+@keyframes slideUp {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+
+}
+
+
+/* ======================================================= */
+/* معلومات القسم */
+/* ======================================================= */
+
+.section-card-info {
+    background:
+        rgba(255, 255, 255, 0.5);
+
+    padding: 15px 20px;
+
+    border-radius:
+        var(--border-radius-sm);
+
+    margin-bottom: 20px;
+
+    border-left:
+        4px solid var(--primary-color);
+
+    font-size: 13px;
+}
+
+
+.section-card-info h3 {
+    color: var(--primary-color);
+
+    font-size: 16px;
+
+    margin-bottom: 4px;
+}
+
+
+/* ======================================================= */
+/* Weekly Cards */
+/* ======================================================= */
+
+.weekly-day-card {
+    background: var(--card-bg);
+
+    border-radius:
+        var(--border-radius-lg);
+
+    padding: 18px 24px;
+
+    margin-bottom: 15px;
+
+    box-shadow: var(--shadow);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.8);
+
+    transition: var(--transition);
+}
+
+
+.weekly-day-card:hover {
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.06);
+}
+
+
+.day-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+
+.day-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    cursor: pointer;
+
+    flex-grow: 1;
+}
+
+
+.day-emoji {
+    font-size: 22px;
+
+    background: #f1f2f6;
+
+    padding: 8px;
+
+    border-radius: 50%;
+
+    transition: var(--transition);
+}
+
+
+.weekly-day-card:hover .day-emoji {
+    background: #ffeaa7;
+}
+
+
+.day-name {
+    font-weight: 700;
+
+    font-size: 17px;
+
+    color: var(--text-dark);
+}
+
+
+/* ======================================================= */
+/* Checkbox */
+/* ======================================================= */
+
+.checkbox-box {
+    cursor: pointer;
+
+    padding: 5px;
+}
+
+
+.custom-checkbox {
+    width: 26px;
+    height: 26px;
+
+    border:
+        2px solid #dfe6e9;
+
+    border-radius: 50%;
+
+    display: inline-block;
+
+    position: relative;
+
+    transition: var(--transition);
+
+    background: #fff;
+}
+
+
+.checkbox-box:hover .custom-checkbox {
+    border-color:
+        var(--accent-color);
+}
+
+
+.checked .custom-checkbox {
+    background:
+        var(--accent-color);
+
+    border-color:
+        var(--accent-color);
+
+    box-shadow:
+        0 4px 10px rgba(253, 121, 168, 0.3);
+}
+
+
+.checked .custom-checkbox::after {
+    content: "✓";
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform:
+        translate(-50%, -50%);
+}
+
+
+.weekly-day-card.completed {
+    opacity: 0.8;
+}
+
+
+.weekly-day-card.completed .day-name {
+    text-decoration:
+        line-through;
+
+    color:
+        var(--text-muted);
+}
+
+
+/* ======================================================= */
+/* تفاصيل اليوم */
+/* ======================================================= */
+
+.day-details {
+    margin-top: 15px;
+
+    border-top:
+        1px dashed #dfe6e9;
+
+    padding-top: 15px;
+
+    display: none;
+}
+
+
+.day-details.expanded {
+    display: block;
+
+    animation:
+        fadeIn 0.3s ease;
+}
+
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+
+/* ======================================================= */
+/* Time Slots */
+/* ======================================================= */
+
+.time-slot {
+    display: flex;
+
+    align-items: center;
+
+    padding: 10px 0;
+
+    font-size: 14px;
+
+    border-bottom:
+        1px solid #f1f2f6;
+}
+
+
+.time-slot:last-child {
+    border-bottom: none;
+}
+
+
+.time-badge {
+    background: #f0edff;
+
+    color: var(--primary-color);
+
+    padding: 4px 12px;
+
+    border-radius: 30px;
+
+    font-weight: 700;
+
+    font-size: 11px;
+
+    margin-left: 15px;
+
+    min-width: 75px;
+
+    text-align: center;
+}
+
+
+.task-name {
+    color: #4a4a4a;
+
+    font-weight: 600;
+}
+
+
+/* ======================================================= */
+/* Monthly Grid */
+/* ======================================================= */
+
+.monthly-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(240px, 1fr)
+        );
+
+    gap: 15px;
+}
+
+
+.monthly-card {
+    background: var(--card-bg);
+
+    border-radius:
+        var(--border-radius-lg);
+
+    padding: 18px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.8);
+
+    box-shadow: var(--shadow);
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    transition: var(--transition);
+}
+
+
+.monthly-card:hover {
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        0 15px 30px rgba(0, 0, 0, 0.08);
+}
+
+
+.monthly-card.completed {
+    background:
+        rgba(235, 247, 240, 0.8);
+
+    border-color: #2ed573;
+}
+
+
+.monthly-card.completed .workout-text {
+    text-decoration:
+        line-through;
+
+    color:
+        var(--text-muted);
+}
+
+
+.card-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 12px;
+}
+
+
+.day-number {
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 17px;
+
+    font-weight: 900;
+
+    color:
+        var(--primary-color);
+}
+
+
+.workout-text {
+    font-size: 13.5px;
+
+    font-weight: 700;
+
+    color: var(--text-dark);
+
+    line-height: 1.5;
+
+    background: #f8f9fa;
+
+    padding: 10px;
+
+    border-radius:
+        var(--border-radius-sm);
+
+    min-height: 55px;
+
+    display: flex;
+
+    align-items: center;
+}
+
+
+/* ======================================================= */
+/* Footer */
+/* ======================================================= */
+
+footer {
+    text-align: center;
+
+    margin-top: 50px;
+
+    padding: 25px;
+
+    border-top:
+        1px solid rgba(0, 0, 0, 0.05);
+}
+
+
+.footer-menna {
+    font-family:
+        'Playfair Display', serif;
+
+    font-style: italic;
+
+    font-weight: 700;
+
+    font-size: 20px;
+
+    color:
+        var(--accent-color);
+}
+
+
+.dev-by {
+    font-size: 11px;
+
+    color: var(--text-muted);
+
+    margin-top: 6px;
+
+    letter-spacing: 0.5px;
+}
+
+
+.owner {
+    font-family:
+        'Montserrat', sans-serif;
+
+    font-weight: 900;
+
+    color:
+        var(--primary-color);
+}
+
+
+/* ======================================================= */
+/* Responsive - الموبايل */
+/* ======================================================= */
+
+@media (max-width: 600px) {
+
+    .reset-control {
+        flex-direction: column;
+    }
+
+    .reset-btn {
+        width: 100%;
+    }
+
+    .logo-area h1 {
+        font-size: 23px;
+    }
+
+    .weekly-day-card {
+        padding: 16px;
+    }
+
+    .time-slot {
+        align-items: flex-start;
+    }
+
+}

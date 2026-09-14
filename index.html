@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Menna's Planner | منظم منة الله الشخصي</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- الخطوط -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@1,600&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- ================= الهيدر ================= -->
+
+        <header>
+
+            <div class="brand-badge">
+                ✨ menna's Workspace
+            </div>
+
+            <div class="logo-area">
+                <h1>
+                    منظم الوقت والتمارين الخاص بـ
+                    <span>منة الله</span>
+                </h1>
+            </div>
+
+            <p class="subtitle">
+                مساحتكِ الخاصة لتنظيم اليوم وتحقيق أهدافك الرياضية واليومية بنجاح 🌸
+            </p>
+
+        </header>
+
+
+        <!-- ================= أزرار التنقل ================= -->
+
+        <div class="tab-control">
+
+            <button class="tab-btn active" onclick="switchTab('weekly')">
+                <span class="btn-icon">📅</span>
+                الجدول الأسبوعي
+            </button>
+
+            <button class="tab-btn" onclick="switchTab('monthly')">
+                <span class="btn-icon">💪</span>
+                التحدي الشهري
+            </button>
+
+        </div>
+
+
+        <!-- ================= أزرار إعادة الضبط ================= -->
+
+        <div class="reset-control">
+
+            <button class="reset-btn weekly-reset" onclick="resetWeekly()">
+                🔄 إعادة ضبط الأسبوع
+            </button>
+
+            <button class="reset-btn monthly-reset" onclick="resetMonthly()">
+                🔄 إعادة ضبط الشهر
+            </button>
+
+        </div>
+
+
+        <!-- ================= الجدول الأسبوعي ================= -->
+
+        <div id="weekly-tab" class="tab-content active-content">
+
+            <div class="section-card-info">
+
+                <h3>
+                    📅 تنظيم اليوم على مدار الأسبوع
+                </h3>
+
+                <p>
+                    اضغطي على اليوم لتستعرضي جدول الساعات بالتفصيل،
+                    وعلمي على اليوم عند الإنجاز الكامل.
+                </p>
+
+            </div>
+
+            <div class="weekly-list" id="weeklyList">
+                <!-- JavaScript سيبني الجدول هنا -->
+            </div>
+
+        </div>
+
+
+        <!-- ================= الجدول الشهري ================= -->
+
+        <div id="monthly-tab" class="tab-content">
+
+            <div class="section-card-info">
+
+                <h3>
+                    💪 تحدي التمارين الرياضية (30 يوم)
+                </h3>
+
+                <p>
+                    حافظي على استمراريتكِ!
+                    حددي الأيام التي قمتِ بأداء التمارين فيها
+                    لتتابعي نسبة إنجازكِ.
+                </p>
+
+            </div>
+
+            <div class="monthly-grid" id="monthlyGrid">
+                <!-- JavaScript سيبني الجدول هنا -->
+            </div>
+
+        </div>
+
+
+        <!-- ================= الفوتر ================= -->
+
+        <footer>
+
+            <p>
+                صُمم خصيصاً لـ
+                <span class="footer-menna">Menna</span>
+                ✨
+            </p>
+
+            <p class="dev-by">
+                تطوير وبرمجة المطور
+                <span class="owner">أدهم محمد</span>
+                © 2026
+            </p>
+
+        </footer>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
