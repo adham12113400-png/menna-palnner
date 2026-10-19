@@ -1,572 +1,196 @@
-// =======================================================
-// بيانات النظام الشهري (30 يوم) والتمارين
-// =======================================================
-
+// Menna Planner — weekly routine and 30-day workout challenge
 const monthlyWorkouts = [
-    "push ( chest , sholder , trice )",
-    "legs + glute",
-    "sholder + arms + obliquse",
-    "fullbody + glute",
-    "arms + cor / obliques + cardio",
-    "rest",
-    "pull ( back )",
-    "legs + glute",
-    "shoulders + arms + obliquse",
-    "fullbody + glutes",
-    "arms + cor / obliquse",
-    "rest",
-    "push",
-    "legs + glute",
-    "sholders + arms",
-    "fullbody + glute",
-    "arms + cor + obliquse",
-    "rest",
-    "push",
-    "legs + glute",
-    "sholders + arms",
-    "pull",
-    "legs + glute",
-    "push",
-    "rest",
-    "fullbody",
-    "arms + cor",
-    "legs + glute",
-    "pull",
-    "push"
+  "Push — Chest, Shoulders & Triceps", "Legs + Glutes", "Shoulders + Arms + Obliques",
+  "Full Body + Glutes", "Arms + Core + Cardio", "Rest Day", "Pull — Back",
+  "Legs + Glutes", "Shoulders + Arms + Obliques", "Full Body + Glutes",
+  "Arms + Core + Obliques", "Rest Day", "Push", "Legs + Glutes",
+  "Shoulders + Arms", "Full Body + Glutes", "Arms + Core + Obliques", "Rest Day",
+  "Push", "Legs + Glutes", "Shoulders + Arms", "Pull — Back", "Legs + Glutes",
+  "Push", "Rest Day", "Full Body", "Arms + Core", "Legs + Glutes", "Pull — Back", "Push"
 ];
-
-
-// =======================================================
-// بيانات جدول الأيام السبعة
-// =======================================================
 
 const weeklyDays = [
-    "السبت (Saturday)",
-    "الأحد (Sunday)",
-    "الإثنين (Monday)",
-    "الثلاثاء (Tuesday)",
-    "الأربعاء (Wednesday)",
-    "الخميس (Thursday)",
-    "الجمعة (Friday)"
+  "السبت", "الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"
 ];
-
-
-// =======================================================
-// الروتين اليومي
-// =======================================================
 
 const dailyRoutine = [
-
-    {
-        time: "5:00 ص",
-        task: "صلاة الفجر + الأذكار + تجهيز الطعام"
-    },
-
-    {
-        time: "7:00 ص",
-        task: "التمرين"
-    },
-
-    {
-        time: "9:00 ص",
-        task: "الإفطار"
-    },
-
-    {
-        time: "10:00 ص",
-        task: "التعليم"
-    },
-
-    {
-        time: "12:00 م",
-        task: "الورد اليومي"
-    },
-
-    {
-        time: "3:00 م",
-        task: "الغداء + الأذكار"
-    },
-
-    {
-        time: "7:00 م",
-        task: "سناك"
-    },
-
-    {
-        time: "8:00 م",
-        task: "وجبة العشاء"
-    },
-
-    {
-        time: "10:00 م",
-        task: "صلاة العشاء + قيام الليل"
-    },
-
-    {
-        time: "11:00 م",
-        task: "موعد النوم"
-    }
-
+  { time: "5:00 ص", task: "صلاة الفجر والأذكار وتجهيز الطعام" },
+  { time: "7:00 ص", task: "التمرين" },
+  { time: "9:00 ص", task: "الإفطار" },
+  { time: "10:00 ص", task: "التعليم" },
+  { time: "12:00 م", task: "الورد اليومي" },
+  { time: "3:00 م", task: "الغداء والأذكار" },
+  { time: "7:00 م", task: "وجبة خفيفة" },
+  { time: "8:00 م", task: "وجبة العشاء" },
+  { time: "10:00 م", task: "صلاة العشاء وقيام الليل" },
+  { time: "11:00 م", task: "موعد النوم" }
 ];
 
-
-// =======================================================
-// التبديل بين الجدول الأسبوعي والشهري
-// =======================================================
+function isComplete(key) {
+  return localStorage.getItem(key) === "true";
+}
 
 function switchTab(tabName) {
+  const weekly = tabName === "weekly";
+  document.querySelectorAll(".tab-btn").forEach(button => {
+    const active = button.id === (weekly ? "weeklyTabButton" : "monthlyTabButton");
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-selected", String(active));
+  });
 
-    document
-        .querySelectorAll('.tab-btn')
-        .forEach(btn => {
-            btn.classList.remove('active');
-        });
-
-    document
-        .querySelectorAll('.tab-content')
-        .forEach(content => {
-            content.classList.remove('active-content');
-        });
-
-
-    if (tabName === 'weekly') {
-
-        document
-            .querySelector(
-                '[onclick="switchTab(\'weekly\')"]'
-            )
-            .classList.add('active');
-
-        document
-            .getElementById('weekly-tab')
-            .classList.add('active-content');
-
-    } else {
-
-        document
-            .querySelector(
-                '[onclick="switchTab(\'monthly\')"]'
-            )
-            .classList.add('active');
-
-        document
-            .getElementById('monthly-tab')
-            .classList.add('active-content');
-
-    }
-
+  document.querySelectorAll(".tab-content").forEach(panel => {
+    const active = panel.id === (weekly ? "weekly-tab" : "monthly-tab");
+    panel.classList.toggle("active-content", active);
+    panel.hidden = !active;
+  });
 }
-
-
-// =======================================================
-// بناء الجدول الأسبوعي
-// =======================================================
 
 function renderWeeklySchedule() {
+  const container = document.getElementById("weeklyList");
+  container.replaceChildren();
 
-    const weeklyListContainer =
-        document.getElementById('weeklyList');
+  weeklyDays.forEach((day, index) => {
+    const completed = isComplete(`weekly-day-${index}`);
+    const card = document.createElement("article");
+    card.className = `weekly-day-card${completed ? " completed" : ""}`;
+    card.id = `weekly-card-${index}`;
 
-    weeklyListContainer.innerHTML = '';
+    const header = document.createElement("div");
+    header.className = "day-header";
 
+    const dayButton = document.createElement("button");
+    dayButton.type = "button";
+    dayButton.className = "day-info";
+    dayButton.setAttribute("aria-expanded", "false");
+    dayButton.setAttribute("aria-controls", `details-${index}`);
+    dayButton.innerHTML = `
+      <span class="day-emoji" aria-hidden="true">▦</span>
+      <span class="day-copy">
+        <span class="day-name">${day}</span>
+        <span class="day-hint">عرض تفاصيل الروتين اليومي</span>
+      </span>
+    `;
+    dayButton.addEventListener("click", () => toggleDetails(index, dayButton));
 
-    weeklyDays.forEach((day, index) => {
+    const checkbox = document.createElement("button");
+    checkbox.type = "button";
+    checkbox.className = `checkbox-box${completed ? " checked" : ""}`;
+    checkbox.setAttribute("aria-label", completed ? `إلغاء إنجاز ${day}` : `تحديد ${day} كمكتمل`);
+    checkbox.setAttribute("aria-pressed", String(completed));
+    checkbox.innerHTML = '<span class="custom-checkbox" aria-hidden="true"></span>';
+    checkbox.addEventListener("click", () => toggleWeeklyComplete(index));
 
-        const dayKey =
-            `weekly-day-${index}`;
+    header.append(dayButton, checkbox);
 
-        const isCompleted =
-            localStorage.getItem(dayKey) === 'true';
-
-
-        // إنشاء كارد اليوم
-
-        const card =
-            document.createElement('div');
-
-        card.className =
-            `weekly-day-card ${
-                isCompleted ? 'completed' : ''
-            }`;
-
-        card.id =
-            `weekly-card-${index}`;
-
-
-        // بناء تفاصيل اليوم
-
-        let routineHTML = '';
-
-
-        dailyRoutine.forEach(slot => {
-
-            routineHTML += `
-                <div class="time-slot">
-
-                    <span class="time-badge">
-                        ${slot.time}
-                    </span>
-
-                    <span class="task-name">
-                        ${slot.task}
-                    </span>
-
-                </div>
-            `;
-
-        });
-
-
-        // محتوى الكارد
-
-        card.innerHTML = `
-
-            <div class="day-header">
-
-                <div
-                    class="day-info"
-                    onclick="toggleDetails(${index})"
-                >
-
-                    <span class="day-emoji">
-                        🗓️
-                    </span>
-
-                    <span class="day-name">
-                        ${day}
-                    </span>
-
-                </div>
-
-
-                <div
-                    class="checkbox-box ${
-                        isCompleted ? 'checked' : ''
-                    }"
-                    onclick="
-                        toggleWeeklyComplete(
-                            ${index},
-                            event
-                        )
-                    "
-                >
-
-                    <span class="custom-checkbox"></span>
-
-                </div>
-
-            </div>
-
-
-            <div
-                class="day-details"
-                id="details-${index}"
-            >
-
-                ${routineHTML}
-
-            </div>
-
-        `;
-
-
-        weeklyListContainer.appendChild(card);
-
+    const details = document.createElement("div");
+    details.className = "day-details";
+    details.id = `details-${index}`;
+    dailyRoutine.forEach(slot => {
+      const row = document.createElement("div");
+      row.className = "time-slot";
+      const time = document.createElement("span");
+      time.className = "time-badge";
+      time.textContent = slot.time;
+      const task = document.createElement("span");
+      task.className = "task-name";
+      task.textContent = slot.task;
+      row.append(time, task);
+      details.append(row);
     });
 
+    card.append(header, details);
+    container.append(card);
+  });
 }
 
-
-// =======================================================
-// فتح وإغلاق تفاصيل اليوم
-// =======================================================
-
-function toggleDetails(index) {
-
-    const detailsDiv =
-        document.getElementById(
-            `details-${index}`
-        );
-
-    detailsDiv.classList.toggle('expanded');
-
+function toggleDetails(index, button) {
+  const details = document.getElementById(`details-${index}`);
+  const expanded = details.classList.toggle("expanded");
+  button.setAttribute("aria-expanded", String(expanded));
+  const hint = button.querySelector(".day-hint");
+  hint.textContent = expanded ? "إخفاء تفاصيل الروتين" : "عرض تفاصيل الروتين اليومي";
 }
 
-
-// =======================================================
-// تحديد اليوم كمكتمل - الأسبوعي
-// =======================================================
-
-function toggleWeeklyComplete(index, event) {
-
-    event.stopPropagation();
-
-
-    const dayKey =
-        `weekly-day-${index}`;
-
-
-    const card =
-        document.getElementById(
-            `weekly-card-${index}`
-        );
-
-
-    const checkboxBox =
-        card.querySelector(
-            '.checkbox-box'
-        );
-
-
-    const isCompleted =
-        localStorage.getItem(dayKey) === 'true';
-
-
-    const nextState =
-        !isCompleted;
-
-
-    localStorage.setItem(
-        dayKey,
-        nextState
-    );
-
-
-    if (nextState) {
-
-        card.classList.add('completed');
-
-        checkboxBox.classList.add('checked');
-
-    } else {
-
-        card.classList.remove('completed');
-
-        checkboxBox.classList.remove('checked');
-
-    }
-
+function toggleWeeklyComplete(index) {
+  const key = `weekly-day-${index}`;
+  localStorage.setItem(key, String(!isComplete(key)));
+  renderWeeklySchedule();
+  updateProgress();
 }
-
-
-// =======================================================
-// بناء الجدول الشهري
-// =======================================================
 
 function renderMonthlyGrid() {
+  const container = document.getElementById("monthlyGrid");
+  container.replaceChildren();
 
-    const monthlyGridContainer =
-        document.getElementById('monthlyGrid');
+  monthlyWorkouts.forEach((workout, index) => {
+    const dayNumber = index + 1;
+    const completed = isComplete(`monthly-day-${dayNumber}`);
+    const card = document.createElement("article");
+    card.className = `monthly-card${completed ? " completed" : ""}`;
+    card.id = `monthly-card-${dayNumber}`;
 
-    monthlyGridContainer.innerHTML = '';
+    const top = document.createElement("div");
+    top.className = "card-top";
 
+    const day = document.createElement("span");
+    day.className = "day-number";
+    day.textContent = `DAY ${String(dayNumber).padStart(2, "0")}`;
 
-    monthlyWorkouts.forEach((workout, index) => {
+    const checkbox = document.createElement("button");
+    checkbox.type = "button";
+    checkbox.className = `checkbox-box${completed ? " checked" : ""}`;
+    checkbox.setAttribute("aria-label", completed ? `إلغاء إنجاز اليوم ${dayNumber}` : `تحديد اليوم ${dayNumber} كمكتمل`);
+    checkbox.setAttribute("aria-pressed", String(completed));
+    checkbox.innerHTML = '<span class="custom-checkbox" aria-hidden="true"></span>';
+    checkbox.addEventListener("click", () => toggleMonthlyComplete(dayNumber));
 
-        const dayNum =
-            index + 1;
-
-
-        const monthKey =
-            `monthly-day-${dayNum}`;
-
-
-        const isCompleted =
-            localStorage.getItem(monthKey) === 'true';
-
-
-        const card =
-            document.createElement('div');
-
-
-        card.className =
-            `monthly-card ${
-                isCompleted ? 'completed' : ''
-            }`;
-
-
-        card.id =
-            `monthly-card-${dayNum}`;
-
-
-        card.innerHTML = `
-
-            <div class="card-top">
-
-                <span class="day-number">
-                    يوم ${dayNum}
-                </span>
-
-
-                <div
-                    class="checkbox-box ${
-                        isCompleted ? 'checked' : ''
-                    }"
-                    onclick="
-                        toggleMonthlyComplete(
-                            ${dayNum}
-                        )
-                    "
-                >
-
-                    <span class="custom-checkbox"></span>
-
-                </div>
-
-            </div>
-
-
-            <div class="workout-text">
-
-                ${workout}
-
-            </div>
-
-        `;
-
-
-        monthlyGridContainer.appendChild(card);
-
-    });
-
+    top.append(day, checkbox);
+    const workoutText = document.createElement("div");
+    workoutText.className = "workout-text";
+    workoutText.textContent = workout;
+    card.append(top, workoutText);
+    container.append(card);
+  });
 }
 
-
-// =======================================================
-// تحديد اليوم كمكتمل - الشهري
-// =======================================================
-
-function toggleMonthlyComplete(dayNum) {
-
-    const monthKey =
-        `monthly-day-${dayNum}`;
-
-
-    const card =
-        document.getElementById(
-            `monthly-card-${dayNum}`
-        );
-
-
-    const checkboxBox =
-        card.querySelector(
-            '.checkbox-box'
-        );
-
-
-    const isCompleted =
-        localStorage.getItem(monthKey) === 'true';
-
-
-    const nextState =
-        !isCompleted;
-
-
-    localStorage.setItem(
-        monthKey,
-        nextState
-    );
-
-
-    if (nextState) {
-
-        card.classList.add('completed');
-
-        checkboxBox.classList.add('checked');
-
-    } else {
-
-        card.classList.remove('completed');
-
-        checkboxBox.classList.remove('checked');
-
-    }
-
+function toggleMonthlyComplete(dayNumber) {
+  const key = `monthly-day-${dayNumber}`;
+  localStorage.setItem(key, String(!isComplete(key)));
+  renderMonthlyGrid();
+  updateProgress();
 }
 
+function updateProgress() {
+  const weeklyDone = weeklyDays.filter((_, index) => isComplete(`weekly-day-${index}`)).length;
+  const monthlyDone = monthlyWorkouts.filter((_, index) => isComplete(`monthly-day-${index + 1}`)).length;
+  const weeklyPercent = Math.round((weeklyDone / weeklyDays.length) * 100);
+  const monthlyPercent = Math.round((monthlyDone / monthlyWorkouts.length) * 100);
 
-// =======================================================
-// RESET الجدول الأسبوعي
-// =======================================================
+  document.getElementById("weeklyProgressValue").textContent = `${weeklyPercent}%`;
+  document.getElementById("weeklyProgressCount").textContent = `${weeklyDone} من 7 أيام`;
+  document.getElementById("weeklyProgressBar").style.width = `${weeklyPercent}%`;
+
+  document.getElementById("monthlyProgressValue").textContent = `${monthlyPercent}%`;
+  document.getElementById("monthlyProgressCount").textContent = `${monthlyDone} من 30 يومًا`;
+  document.getElementById("monthlyProgressBar").style.width = `${monthlyPercent}%`;
+}
 
 function resetWeekly() {
-
-    const confirmReset = confirm(
-        "هل أنتِ متأكدة من إعادة ضبط الجدول الأسبوعي؟\n\n" +
-        "سيتم إلغاء علامة الإنجاز لجميع أيام الأسبوع."
-    );
-
-
-    if (!confirmReset) {
-        return;
-    }
-
-
-    // حذف حالات الأيام السبعة فقط
-
-    weeklyDays.forEach((day, index) => {
-
-        localStorage.removeItem(
-            `weekly-day-${index}`
-        );
-
-    });
-
-
-    // إعادة بناء الجدول
-
-    renderWeeklySchedule();
-
+  if (!confirm("هل أنتِ متأكدة من إعادة ضبط الأسبوع؟ سيتم إلغاء إنجازات الأيام السبعة.")) return;
+  weeklyDays.forEach((_, index) => localStorage.removeItem(`weekly-day-${index}`));
+  renderWeeklySchedule();
+  updateProgress();
 }
-
-
-// =======================================================
-// RESET الجدول الشهري
-// =======================================================
 
 function resetMonthly() {
-
-    const confirmReset = confirm(
-        "هل أنتِ متأكدة من إعادة ضبط التحدي الشهري؟\n\n" +
-        "سيتم إلغاء علامة الإنجاز لجميع أيام الـ30 يوم."
-    );
-
-
-    if (!confirmReset) {
-        return;
-    }
-
-
-    // حذف حالات الـ30 يوم فقط
-
-    monthlyWorkouts.forEach((workout, index) => {
-
-        const dayNum =
-            index + 1;
-
-
-        localStorage.removeItem(
-            `monthly-day-${dayNum}`
-        );
-
-    });
-
-
-    // إعادة بناء الجدول
-
-    renderMonthlyGrid();
-
+  if (!confirm("هل أنتِ متأكدة من إعادة ضبط تحدي التمارين؟ سيتم إلغاء إنجازات الأيام الثلاثين.")) return;
+  monthlyWorkouts.forEach((_, index) => localStorage.removeItem(`monthly-day-${index + 1}`));
+  renderMonthlyGrid();
+  updateProgress();
 }
 
-
-// =======================================================
-// تشغيل الموقع عند فتح الصفحة
-// =======================================================
-
-window.onload = function () {
-
-    renderWeeklySchedule();
-
-    renderMonthlyGrid();
-
-};
+document.addEventListener("DOMContentLoaded", () => {
+  renderWeeklySchedule();
+  renderMonthlyGrid();
+  updateProgress();
+});
