@@ -1,149 +1,106 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Menna's Planner | منظم منة الله الشخصي</title>
-
-    <link rel="stylesheet" href="style.css">
-
-    <!-- الخطوط -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@1,600&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f6f2">
+  <meta name="description" content="مساحة منة الله الشخصية لتنظيم الأسبوع ومتابعة تحدي التمارين.">
+  <title>Menna Planner — مساحتك اليومية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=DM+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-    <div class="app-container">
-
-        <!-- ================= الهيدر ================= -->
-
-        <header>
-
-            <div class="brand-badge">
-                ✨ menna's Workspace
-            </div>
-
-            <div class="logo-area">
-                <h1>
-                    منظم الوقت والتمارين الخاص بـ
-                    <span>منة الله</span>
-                </h1>
-            </div>
-
-            <p class="subtitle">
-                مساحتكِ الخاصة لتنظيم اليوم وتحقيق أهدافك الرياضية واليومية بنجاح 🌸
-            </p>
-
-        </header>
-
-
-        <!-- ================= أزرار التنقل ================= -->
-
-        <div class="tab-control">
-
-            <button class="tab-btn active" onclick="switchTab('weekly')">
-                <span class="btn-icon">📅</span>
-                الجدول الأسبوعي
-            </button>
-
-            <button class="tab-btn" onclick="switchTab('monthly')">
-                <span class="btn-icon">💪</span>
-                التحدي الشهري
-            </button>
-
+  <main class="app-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> MENNA'S PERSONAL SPACE</div>
+        <p class="hero-kicker">خطوة صغيرة كل يوم تصنع فرقًا كبيرًا</p>
+        <h1>يومكِ، <span>على طريقتكِ.</span></h1>
+        <p class="hero-description">مساحة هادئة لترتيب يومكِ، متابعة عاداتكِ، والاحتفال بكل خطوة تقرّبكِ من أهدافكِ.</p>
+        <div class="hero-meta">
+          <span class="meta-mark">✦</span>
+          <span>خططي بوعي. تحركي بثبات. وامنحي نفسكِ وقتًا.</span>
         </div>
-
-
-        <!-- ================= أزرار إعادة الضبط ================= -->
-
-        <div class="reset-control">
-
-            <button class="reset-btn weekly-reset" onclick="resetWeekly()">
-                🔄 إعادة ضبط الأسبوع
-            </button>
-
-            <button class="reset-btn monthly-reset" onclick="resetMonthly()">
-                🔄 إعادة ضبط الشهر
-            </button>
-
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-orbit orbit-one"></div>
+        <div class="art-orbit orbit-two"></div>
+        <div class="art-sun"></div>
+        <div class="art-leaf leaf-one"></div>
+        <div class="art-leaf leaf-two"></div>
+        <div class="art-note">
+          <span class="note-label">YOUR DAILY REMINDER</span>
+          <strong>Progress,<br>not perfection.</strong>
+          <span class="note-star">✳</span>
         </div>
+      </div>
+    </header>
 
+    <section class="overview" aria-label="ملخص الإنجاز">
+      <article class="stat-card stat-weekly">
+        <div class="stat-top"><span>إنجاز الأسبوع</span><span class="stat-icon">↗</span></div>
+        <div class="stat-value"><strong id="weeklyProgressValue">0%</strong><span id="weeklyProgressCount">0 من 7 أيام</span></div>
+        <div class="progress-track"><div class="progress-fill" id="weeklyProgressBar"></div></div>
+      </article>
+      <article class="stat-card stat-monthly">
+        <div class="stat-top"><span>تحدي التمارين</span><span class="stat-icon">✳</span></div>
+        <div class="stat-value"><strong id="monthlyProgressValue">0%</strong><span id="monthlyProgressCount">0 من 30 يومًا</span></div>
+        <div class="progress-track"><div class="progress-fill" id="monthlyProgressBar"></div></div>
+      </article>
+      <article class="quote-card">
+        <span class="quote-mark">“</span>
+        <p>الاستمرارية أهم من المثالية.</p>
+        <span class="quote-caption">تذكير لطيف لنفسكِ اليوم</span>
+      </article>
+    </section>
 
-        <!-- ================= الجدول الأسبوعي ================= -->
+    <nav class="workspace-nav" aria-label="أقسام المخطط">
+      <div class="nav-heading">
+        <span class="section-overline">YOUR ROUTINE</span>
+        <h2>مساحة التنظيم</h2>
+      </div>
+      <div class="tab-control" role="tablist" aria-label="اختيار الجدول">
+        <button class="tab-btn active" id="weeklyTabButton" type="button" role="tab" aria-selected="true" aria-controls="weekly-tab" onclick="switchTab('weekly')">
+          <span class="tab-symbol" aria-hidden="true">▦</span> الجدول الأسبوعي
+        </button>
+        <button class="tab-btn" id="monthlyTabButton" type="button" role="tab" aria-selected="false" aria-controls="monthly-tab" onclick="switchTab('monthly')">
+          <span class="tab-symbol" aria-hidden="true">✳</span> تحدي 30 يومًا
+        </button>
+      </div>
+    </nav>
 
-        <div id="weekly-tab" class="tab-content active-content">
-
-            <div class="section-card-info">
-
-                <h3>
-                    📅 تنظيم اليوم على مدار الأسبوع
-                </h3>
-
-                <p>
-                    اضغطي على اليوم لتستعرضي جدول الساعات بالتفصيل،
-                    وعلمي على اليوم عند الإنجاز الكامل.
-                </p>
-
-            </div>
-
-            <div class="weekly-list" id="weeklyList">
-                <!-- JavaScript سيبني الجدول هنا -->
-            </div>
-
+    <section class="tab-content active-content" id="weekly-tab" role="tabpanel" aria-labelledby="weeklyTabButton">
+      <div class="section-heading">
+        <div>
+          <span class="section-overline">A LITTLE PLAN GOES A LONG WAY</span>
+          <h2>إيقاع أسبوعكِ</h2>
+          <p>اختاري أي يوم لعرض تفاصيله، وحددي علامة الإنجاز عندما تنتهين.</p>
         </div>
+        <button class="reset-btn weekly-reset" type="button" onclick="resetWeekly()">إعادة ضبط الأسبوع <span aria-hidden="true">↺</span></button>
+      </div>
+      <div class="weekly-list" id="weeklyList"></div>
+    </section>
 
-
-        <!-- ================= الجدول الشهري ================= -->
-
-        <div id="monthly-tab" class="tab-content">
-
-            <div class="section-card-info">
-
-                <h3>
-                    💪 تحدي التمارين الرياضية (30 يوم)
-                </h3>
-
-                <p>
-                    حافظي على استمراريتكِ!
-                    حددي الأيام التي قمتِ بأداء التمارين فيها
-                    لتتابعي نسبة إنجازكِ.
-                </p>
-
-            </div>
-
-            <div class="monthly-grid" id="monthlyGrid">
-                <!-- JavaScript سيبني الجدول هنا -->
-            </div>
-
+    <section class="tab-content" id="monthly-tab" role="tabpanel" aria-labelledby="monthlyTabButton" hidden>
+      <div class="section-heading">
+        <div>
+          <span class="section-overline">SHOW UP FOR YOURSELF</span>
+          <h2>تحدي الحركة</h2>
+          <p>ثلاثون يومًا من الالتزام، يومًا بعد يوم. علّمي الأيام التي أنجزتِ فيها تمرينكِ.</p>
         </div>
+        <button class="reset-btn monthly-reset" type="button" onclick="resetMonthly()">إعادة ضبط التحدي <span aria-hidden="true">↺</span></button>
+      </div>
+      <div class="monthly-grid" id="monthlyGrid"></div>
+    </section>
 
-
-        <!-- ================= الفوتر ================= -->
-
-        <footer>
-
-            <p>
-                صُمم خصيصاً لـ
-                <span class="footer-menna">Menna</span>
-                ✨
-            </p>
-
-            <p class="dev-by">
-                تطوير وبرمجة المطور
-                <span class="owner">أدهم محمد</span>
-                © 2026
-            </p>
-
-        </footer>
-
-    </div>
-
-
-    <script src="script.js"></script>
-
+    <footer class="site-footer">
+      <div class="footer-brand"><span class="footer-spark">✳</span> Menna Planner</div>
+      <p>مساحة صغيرة لعادات تصنع حياة أجمل.</p>
+      <div class="footer-credit">صُمم بعناية لـ <strong>Menna</strong><span class="credit-divider">·</span> تطوير <strong>أدهم محمد</strong><span class="credit-divider">·</span> 2026</div>
+    </footer>
+  </main>
+  <script src="script.js"></script>
 </body>
 </html>
